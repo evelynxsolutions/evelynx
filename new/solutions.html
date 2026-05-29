@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Solutions | Evelynx Solutions Pvt. Ltd.</title>
+    <meta name="description" content="End-to-end IT solutions by Evelynx Solutions – Business Continuity, Cloud, Cybersecurity, IT Support, IT Consulting and Managed IT Services from Kathmandu."/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        /* ──────────── GLOBAL TOKENS & RESET ──────────── */
+        :root {
+            --ink:     #0D0F14;
+            --ink-2:   #1C2030;
+            --blue:    #0B3D91;
+            --blue-2:  #1554C0;
+            --gold:    #B8922A;
+            --gold-lt: #D4AD5A;
+            --muted:   #6B7280;
+            --border:  #E4E7EC;
+            --off:     #F8F9FB;
+            --white:   #FFFFFF;
+            --red:     #C8102E;
+            --f-display: 'Cormorant Garamond', Georgia, serif;
+            --f-body:    'Outfit', system-ui, sans-serif;
+            --ease: cubic-bezier(.16,1,.3,1);
+            --dur: .65s;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            font-family: var(--f-body);
+            background: var(--white);
+            color: var(--ink);
+            line-height: 1.65;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+        button { font-family: var(--f-body); cursor: pointer; border: none; background: none; }
+        ul { list-style: none; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--off); }
+        ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+
+        /* ──────────── PROGRESS BAR ──────────── */
+        #prog {
+            position: fixed; top: 0; left: 0; height: 2px;
+            background: var(--gold); z-index: 9999; width: 0;
+            transition: width .1s linear;
+        }
+
+        /* ──────────── NAVIGATION ──────────── */
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 4rem; height: 72px;
+            transition: background .4s, box-shadow .4s;
+        }
+        .nav.bg {
+            background: rgba(255,255,255,.96);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 1px 0 var(--border);
+        }
+        .nav-logo {
+            display: flex; align-items: center; gap: 10px;
+            font-family: var(--f-display); font-weight: 600;
+            font-size: 1.5rem; letter-spacing: -.01em; color: var(--ink);
+        }
+        .nav-logo-mark {
+            width: 36px; height: 36px;
+            background: var(--blue); border-radius: 7px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-logo-mark svg { width: 20px; height: 20px; }
+        .nav-links { display: flex; align-items: center; gap: 2.5rem; }
+        .nav-links a {
+            font-size: .875rem; font-weight: 400; color: var(--muted);
+            letter-spacing: .03em; transition: color .2s;
+            position: relative; padding-bottom: 2px;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -2px; left: 0; right: 100%;
+            height: 1px; background: var(--blue); transition: right .3s var(--ease);
+        }
+        .nav-links a:hover { color: var(--ink); }
+        .nav-links a:hover::after { right: 0; }
+        .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+        .nav-cta {
+            font-size: .875rem; font-weight: 500; letter-spacing: .04em;
+            color: var(--white); background: var(--blue);
+            padding: .55rem 1.5rem; border-radius: 4px;
+            transition: background .2s, transform .2s;
+        }
+        .nav-cta:hover { background: var(--blue-2); transform: translateY(-1px); }
+        .nav-lang { font-size: .85rem; color: var(--muted); padding: .3rem; transition: color .2s; }
+        .nav-lang:hover { color: var(--ink); }
+        .nav-ham { display: none; flex-direction: column; gap: 5px; padding: 4px; }
+        .nav-ham span { width: 22px; height: 1.5px; background: var(--ink); border-radius: 2px; transition: all .3s; }
+
+        /* ──────────── PAGE CONTENT ──────────── */
+        .page-content { padding-top: 8rem; padding-bottom: 5rem; }
+        .page-heading { text-align: center; margin-bottom: 4rem; }
+        .page-heading .eyebrow {
+            display: flex; align-items: center; gap: .6rem;
+            font-size: .72rem; font-weight: 500; letter-spacing: .14em;
+            text-transform: uppercase; color: var(--gold);
+            margin-bottom: 1.25rem;
+            justify-content: center;
+        }
+        .page-heading .eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+        .page-heading .sec-h {
+            font-family: var(--f-display);
+            font-size: clamp(2.2rem, 4vw, 3.6rem);
+            font-weight: 300; line-height: 1.12;
+            letter-spacing: -.02em; color: var(--ink);
+            margin-bottom: 1rem;
+        }
+        .page-heading .sec-sub {
+            font-size: 1.05rem; font-weight: 300; color: var(--muted);
+            max-width: 650px; margin: 0 auto; line-height: 1.8;
+        }
+
+        .solution-section {
+            padding: 5rem 4rem;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            scroll-margin-top: 80px;
+        }
+        .solution-section:nth-child(even) {
+            background: var(--off);
+        }
+        .solution-section .container {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+            align-items: center;
+        }
+        .solution-text h2 {
+            font-family: var(--f-display);
+            font-size: 2.2rem; font-weight: 300;
+            line-height: 1.15; margin-bottom: 1.25rem;
+            color: var(--ink);
+        }
+        .solution-text p {
+            color: var(--muted); font-size: .95rem;
+            line-height: 1.8; margin-bottom: 1.5rem;
+        }
+        .solution-text ul {
+            list-style: none; padding: 0; margin-bottom: 1.75rem;
+        }
+        .solution-text ul li {
+            margin-bottom: 0.5rem; color: var(--muted);
+            font-size: .9rem; display: flex; align-items: flex-start; gap: 0.6rem;
+        }
+        .solution-text ul li::before {
+            content: "✓"; color: var(--gold); font-weight: bold;
+            margin-right: 0.4rem; flex-shrink: 0;
+        }
+        .solution-icon-large {
+            font-size: 7rem; text-align: center;
+            color: var(--gold); opacity: 0.7;
+        }
+        .cta-btn {
+            display: inline-block; margin-top: 0.5rem;
+            background: var(--blue); color: var(--white);
+            padding: 0.75rem 1.8rem; border-radius: 4px;
+            font-weight: 500; font-size: .9rem; letter-spacing: .04em;
+            text-decoration: none;
+            transition: background .2s, transform .2s;
+        }
+        .cta-btn:hover { background: var(--blue-2); transform: translateY(-2px); }
+
+        /* ──────────── FOOTER ──────────── */
+        .footer {
+            background: var(--ink); color: rgba(255,255,255,.5);
+            padding: 5rem 4rem 2.5rem;
+        }
+        .footer-top {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem; padding-bottom: 4rem;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+            margin-bottom: 2rem;
+        }
+        .footer-brand p {
+            font-size: .875rem; color: rgba(255,255,255,.4);
+            line-height: 1.8; max-width: 280px; margin-top: 1.25rem;
+            font-weight: 300;
+        }
+        .footer-brand .f-logo {
+            font-family: var(--f-display); font-size: 1.5rem;
+            font-weight: 400; color: var(--white);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .footer-col h5 {
+            font-size: .7rem; font-weight: 600; letter-spacing: .12em;
+            text-transform: uppercase; color: rgba(255,255,255,.35);
+            margin-bottom: 1.25rem;
+        }
+        .footer-col a {
+            display: block; font-size: .875rem; color: rgba(255,255,255,.45);
+            margin-bottom: .65rem; transition: color .2s; font-weight: 300;
+        }
+        .footer-col a:hover { color: var(--white); }
+        .footer-bottom {
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+        }
+        .footer-bottom p { font-size: .8rem; color: rgba(255,255,255,.3); }
+        .footer-tags { display: flex; gap: .75rem; flex-wrap: wrap; }
+        .f-tag {
+            font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+            color: var(--gold); padding: .3rem .7rem;
+            border: 1px solid rgba(184,146,42,.25); border-radius: 100px;
+        }
+
+        /* ──────────── FLOATERS ──────────── */
+        .back-top {
+            position: fixed; bottom: 2.5rem; right: 2.5rem; z-index: 800;
+            width: 44px; height: 44px;
+            background: var(--ink); color: var(--white);
+            border-radius: 4px; border: 1px solid rgba(255,255,255,.12);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; opacity: 0; pointer-events: none;
+            transition: opacity .3s, transform .3s;
+        }
+        .back-top.vis { opacity: 1; pointer-events: auto; }
+        .back-top:hover { transform: translateY(-3px); background: var(--blue); }
+
+        .chat-float {
+            position: fixed; bottom: 2.5rem; left: 2.5rem; z-index: 800;
+        }
+        .chat-float-btn {
+            width: 52px; height: 52px; border-radius: 50%;
+            background: var(--blue); color: var(--white);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 20px rgba(11,61,145,.3);
+            transition: transform .2s, background .2s;
+        }
+        .chat-float-btn:hover { transform: scale(1.08); background: var(--blue-2); }
+        .chat-pop {
+            position: absolute; bottom: 64px; left: 0;
+            background: var(--white); border: 1px solid var(--border);
+            border-radius: 10px; padding: 1.5rem;
+            width: 260px; box-shadow: 0 8px 32px rgba(0,0,0,.1);
+            display: none; flex-direction: column; gap: .5rem;
+        }
+        .chat-pop.vis { display: flex; }
+        .chat-pop h5 { font-size: .85rem; font-weight: 600; margin-bottom: .5rem; color: var(--ink); }
+        .chat-pop a {
+            display: flex; align-items: center; gap: .65rem;
+            font-size: .85rem; color: var(--muted); padding: .55rem .75rem;
+            border-radius: 6px; transition: background .2s, color .2s; font-weight: 400;
+        }
+        .chat-pop a:hover { background: var(--off); color: var(--blue); }
+        .chat-pop-close {
+            position: absolute; top: .75rem; right: .75rem;
+            font-size: .85rem; color: var(--muted); padding: .2rem; transition: color .2s;
+        }
+        .chat-pop-close:hover { color: var(--ink); }
+
+        .cookie-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--ink); color: rgba(255,255,255,.7);
+            padding: 1.1rem 4rem;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 2rem; z-index: 850; font-size: .85rem;
+            transform: translateY(100%); transition: transform .4s var(--ease);
+        }
+        .cookie-bar.vis { transform: translateY(0); }
+        .cookie-bar a { color: var(--gold); }
+        .cookie-accept {
+            font-size: .82rem; font-weight: 500;
+            color: var(--white); background: var(--blue);
+            padding: .55rem 1.5rem; border-radius: 3px;
+            white-space: nowrap; transition: background .2s;
+        }
+        .cookie-accept:hover { background: var(--blue-2); }
+
+        .mob-call {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0;
+            background: var(--blue); color: var(--white);
+            text-align: center; padding: .9rem; font-size: .9rem; font-weight: 500;
+            z-index: 800; letter-spacing: .04em;
+        }
+
+        /* ──────────── RESPONSIVE ──────────── */
+        @media (max-width: 900px) {
+            .solution-section .container { grid-template-columns: 1fr; gap: 2rem; }
+            .solution-icon-large { font-size: 4rem; }
+            .nav { padding: 0 2rem; }
+            .page-content { padding-top: 5rem; }
+            .footer { padding: 4rem 2rem 2rem; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .solution-section { padding: 4rem 2rem; }
+        }
+        @media (max-width: 640px) {
+            .nav-links, .nav-right { display: none; }
+            .nav-ham { display: flex; }
+            .footer-top { grid-template-columns: 1fr; }
+            .mob-call { display: block; }
+            .chat-float { bottom: 4.5rem; }
+            .back-top { bottom: 4.5rem; }
+        }
+
+        .mob-menu {
+            display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,.98); backdrop-filter: blur(16px);
+            z-index: 800; padding: 3rem 2rem; flex-direction: column; gap: 1.5rem;
+            overflow-y: auto;
+        }
+        .mob-menu.vis { display: flex; }
+        .mob-menu a {
+            font-size: 1.4rem; font-weight: 300; color: var(--ink);
+            font-family: var(--f-display);
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            transition: color .2s;
+        }
+        .mob-menu a:hover { color: var(--blue); }
+
+        .reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+        .reveal.in { opacity: 1; transform: none; }
+    </style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- ═══ NAV ═══ -->
+<header class="nav" id="nav">
+    <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark">
+            <svg viewBox="0 0 56 56" fill="none"><polyline points="10,34 22,18 30,26 38,14 46,28" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><line x1="30" y1="26" x2="30" y2="40" stroke="rgba(255,255,255,.6)" stroke-width="3" stroke-linecap="round"/><circle cx="30" cy="46" r="4" fill="rgba(255,255,255,.4)"/><circle cx="30" cy="46" r="2" fill="#fff"/></svg>
+        </div>
+        Evelynx
+    </a>
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-right">
+        <button class="nav-lang" id="langBtn">🇳🇵 नेपाली</button>
+        <a href="contact.html" class="nav-cta">Contact us</a>
+    </div>
+    <button class="nav-ham" id="hamBtn"><span></span><span></span><span></span></button>
+</header>
+<div class="mob-menu" id="mobMenu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="solutions.html">Solutions</a>
+    <a href="contact.html">Contact</a>
+</div>
+
+<!-- ═══ SOLUTIONS CONTENT ═══ -->
+<div class="page-content">
+    <div class="page-heading reveal">
+        <div class="eyebrow">What We Solve</div>
+        <h2 class="sec-h">Technology Solutions for<br/>Modern Business</h2>
+        <p class="sec-sub">We don't just fix problems – we prevent them. Our proactive approach keeps your business running smoothly, securely, and efficiently.</p>
+    </div>
+
+    <!-- 1. Business Continuity -->
+    <section class="solution-section" id="business-continuity">
+        <div class="container reveal">
+            <div class="solution-text">
+                <h2>Business Continuity</h2>
+                <p>Keep your operations running no matter what. Disaster recovery, automated backups, and failover systems ensure zero downtime.</p>
+                <ul>
+                    <li>Disaster recovery planning and implementation</li>
+                    <li>Automated backup solutions with off‑site replication</li>
+                    <li>Failover systems and redundant infrastructure</li>
+                    <li>Regular testing and compliance documentation</li>
+                </ul>
+                <a href="contact.html" class="cta-btn">Plan Your Continuity</a>
+            </div>
+            <div class="solution-icon-large">🔄</div>
+        </div>
+    </section>
+
+    <!-- 2. Cloud Solutions -->
+    <section class="solution-section" id="cloud-solutions">
+        <div class="container reveal">
+            <div class="solution-icon-large">☁️</div>
+            <div class="solution-text">
+                <h2>Cloud Solutions</h2>
+                <p>Flexible, secure cloud infrastructure – migration, optimization, and 24/7 management on AWS, Azure, and GCP.</p>
+                <ul>
+                    <li>Cloud migration and deployment (AWS, Azure, GCP)</li>
+                    <li>Serverless architecture and containerization</li>
+                    <li>Cloud backup and disaster recovery</li>
+                    <li>Cost optimization and performance monitoring</li>
+                </ul>
+                <a href="contact.html" class="cta-btn">Start Cloud Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Cybersecurity -->
+    <section class="solution-section" id="cybersecurity">
+        <div class="container reveal">
+            <div class="solution-text">
+                <h2>Cybersecurity</h2>
+                <p>Protect your business from ransomware, phishing, and data breaches with multi‑layered security and 24/7 monitoring.</p>
+                <ul>
+                    <li>Endpoint protection and advanced firewall management</li>
+                    <li>Vulnerability assessments and penetration testing</li>
+                    <li>Security awareness training for employees</li>
+                    <li>Compliance audits (ISO, PCI‑DSS, GDPR)</li>
+                </ul>
+                <a href="contact.html" class="cta-btn">Get a Security Assessment</a>
+            </div>
+            <div class="solution-icon-large">🔒</div>
+        </div>
+    </section>
+
+    <!-- 4. IT Support Services -->
+    <section class="solution-section" id="it-support">
+        <div class="container reveal">
+            <div class="solution-icon-large">🎧</div>
+            <div class="solution-text">
+                <h2>IT Support Services</h2>
+                <p>24/7 helpdesk with Nepali‑speaking engineers. Remote and on‑site support that keeps your team productive.</p>
+                <ul>
+                    <li>24/7 multi‑channel helpdesk (phone, email, chat)</li>
+                    <li>Remote and on‑site troubleshooting</li>
+                    <li>Hardware and software break‑fix support</li>
+                    <li>User onboarding and offboarding assistance</li>
+                </ul>
+                <a href="contact.html" class="cta-btn">Explore Support Plans</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. IT Consulting -->
+    <section class="solution-section" id="it-consulting">
+        <div class="container reveal">
+            <div class="solution-text">
+                <h2>IT Consulting</h2>
+                <p>Align your technology with business goals. Strategic roadmaps, digital transformation, and vendor management.</p>
+                <ul>
+                    <li>Technology audits and strategic planning</li>
+                    <li>Digital transformation roadmaps</li>
+                    <li>Vendor selection and management</li>
+                    <li>Project management and implementation</li>
+                </ul>
+                <a href="contact.html" class="cta-btn">Book a Consultation</a>
+            </div>
+            <div class="solution-icon-large">📊</div>
+        </div>
+    </section>
+
+    <!-- 6. Managed IT Services -->
+    <section class="solution-section" id="managed-it">
+        <div class="container reveal">
+            <div class="solution-icon-large">🖥️</div>
+            <div class="solution-text">
+                <h2>Managed IT Services</h2>
+                <p>Outsource your IT operations so you can focus on your core business. Proactive monitoring, maintenance, and support.</p>
+                <ul>
+                    <li>24/7 system monitoring and alerting</li>
+                    <li>Patch management and software updates</li>
+                    <li>Helpdesk and end‑user support</li>
+                    <li>IT budgeting and asset lifecycle management</li>
+                </ul>
+                <a href="contact.html" class="cta-btn">Get a Managed IT Plan</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            <div class="f-logo">
+                <div class="nav-logo-mark" style="width:32px;height:32px;border-radius:6px;">
+                    <svg viewBox="0 0 56 56" fill="none" style="width:18px;height:18px;"><polyline points="10,34 22,18 30,26 38,14 46,28" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><line x1="30" y1="26" x2="30" y2="40" stroke="rgba(255,255,255,.6)" stroke-width="3" stroke-linecap="round"/><circle cx="30" cy="46" r="3" fill="rgba(255,255,255,.4)"/><circle cx="30" cy="46" r="1.5" fill="#fff"/></svg>
+                </div>
+                Evelynx Solutions
+            </div>
+            <p>A Nepal‑registered Private Limited company delivering software, cloud, cybersecurity and digital transformation from Kathmandu.</p>
+        </div>
+        <div class="footer-col">
+            <h5>Solutions</h5>
+            <a href="solutions.html">Software Development</a>
+            <a href="solutions.html">Cloud Solutions</a>
+            <a href="solutions.html">Cybersecurity</a>
+            <a href="solutions.html">AI & ML</a>
+            <a href="solutions.html">UI/UX Design</a>
+        </div>
+        <div class="footer-col">
+            <h5>Company</h5>
+            <a href="about.html">About us</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-col">
+            <h5>Legal</h5>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Companies Act 2063</a>
+            <a href="#">Labour Act 2074</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2081 B.S. Evelynx Solutions Private Limited · Kathmandu, Nepal · All rights reserved.</p>
+        <div class="footer-tags">
+            <span class="f-tag">OCR Registered</span>
+            <span class="f-tag">PAN Holder</span>
+            <span class="f-tag">SSF Compliant</span>
+        </div>
+    </div>
+</footer>
+
+<!-- ═══ FLOATERS ═══ -->
+<a href="tel:+9779768969780" class="mob-call">📞 Tap to call — +977‑9768969780</a>
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="chat-float" id="chatFloat">
+    <div class="chat-pop" id="chatPop">
+        <button class="chat-pop-close" id="chatClose">✕</button>
+        <h5>How can we help?</h5>
+        <a href="https://wa.me/9779768969780" target="_blank">💬 WhatsApp Chat</a>
+        <a href="mailto:info@evelynxsolutions.com.np">✉️ Email Us</a>
+        <a href="tel:+9779768969780">📞 Call Now</a>
+    </div>
+    <button class="chat-float-btn" id="chatBtn">💬</button>
+</div>
+<div class="cookie-bar" id="cookieBar">
+    <span>🍪 We use cookies to improve your experience. <a href="#">Privacy Policy</a>.</span>
+    <button class="cookie-accept" id="cookieAccept">Accept</button>
+</div>
+
+<script>
+    // Progress bar & sticky nav
+    window.addEventListener('scroll', () => {
+        const el = document.documentElement;
+        const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+        document.getElementById('prog').style.width = pct + '%';
+        document.getElementById('nav').classList.toggle('bg', window.scrollY > 40);
+        document.getElementById('backTop').classList.toggle('vis', window.scrollY > 600);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.08 });
+    reveals.forEach(r => observer.observe(r));
+
+    // Mobile menu
+    const hamBtn = document.getElementById('hamBtn');
+    const mobMenu = document.getElementById('mobMenu');
+    hamBtn.addEventListener('click', () => mobMenu.classList.toggle('vis'));
+    document.querySelectorAll('.mob-menu a').forEach(l => l.addEventListener('click', () => mobMenu.classList.remove('vis')));
+
+    // Chat widget
+    const chatBtn = document.getElementById('chatBtn');
+    const chatPop = document.getElementById('chatPop');
+    chatBtn.addEventListener('click', e => { e.stopPropagation(); chatPop.classList.toggle('vis'); });
+    document.getElementById('chatClose').addEventListener('click', () => chatPop.classList.remove('vis'));
+    window.addEventListener('click', e => { if (!document.getElementById('chatFloat').contains(e.target)) chatPop.classList.remove('vis'); });
+
+    // Cookie consent
+    const cookieBar = document.getElementById('cookieBar');
+    if (!localStorage.getItem('ck')) setTimeout(() => cookieBar.classList.add('vis'), 1500);
+    document.getElementById('cookieAccept').addEventListener('click', () => { localStorage.setItem('ck','1'); cookieBar.classList.remove('vis'); });
+
+    // Language toggle (placeholder)
+    document.getElementById('langBtn').addEventListener('click', function() {
+        this.textContent = this.textContent.includes('नेपाली') ? '🇬🇧 English' : '🇳🇵 नेपाली';
+    });
+</script>
+</body>
+</html>

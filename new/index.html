@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Evelynx Solutions — IT & Technology Nepal</title>
+<meta name="description" content="Nepal's premier IT company delivering software, cloud, cybersecurity, and digital transformation from Kathmandu."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ─────────────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────────────── */
+:root {
+  --ink:     #0D0F14;
+  --ink-2:   #1C2030;
+  --blue:    #0B3D91;
+  --blue-2:  #1554C0;
+  --gold:    #B8922A;
+  --gold-lt: #D4AD5A;
+  --muted:   #6B7280;
+  --border:  #E4E7EC;
+  --off:     #F8F9FB;
+  --white:   #FFFFFF;
+  --red:     #C8102E;
+
+  --f-display: 'Cormorant Garamond', Georgia, serif;
+  --f-body:    'Outfit', system-ui, sans-serif;
+
+  --ease: cubic-bezier(.16,1,.3,1);
+  --dur: .65s;
+}
+
+/* ─────────────────────────────────────────────────
+   RESET
+───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--f-body);
+  background: var(--white);
+  color: var(--ink);
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: var(--f-body); cursor: pointer; border: none; background: none; }
+ul { list-style: none; }
+
+/* ─────────────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--off); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+
+/* ─────────────────────────────────────────────────
+   PROGRESS BAR
+───────────────────────────────────────────────── */
+#prog {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: var(--gold); z-index: 9999; width: 0;
+  transition: width .1s linear;
+}
+
+/* ─────────────────────────────────────────────────
+   NAV
+───────────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 4rem;
+  height: 72px;
+  transition: background .4s, box-shadow .4s;
+}
+.nav.bg {
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 var(--border);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--f-display); font-weight: 600;
+  font-size: 1.5rem; letter-spacing: -.01em;
+  color: var(--ink);
+}
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--blue); border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-logo-mark svg { width: 20px; height: 20px; }
+.nav-links { display: flex; align-items: center; gap: 2.5rem; }
+.nav-links a {
+  font-size: .875rem; font-weight: 400; color: var(--muted);
+  letter-spacing: .03em; transition: color .2s;
+  position: relative; padding-bottom: 2px;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 100%;
+  height: 1px; background: var(--blue); transition: right .3s var(--ease);
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { right: 0; }
+.nav-right { display: flex; align-items: center; gap: 1.5rem; }
+.nav-cta {
+  font-size: .875rem; font-weight: 500; letter-spacing: .04em;
+  color: var(--white); background: var(--blue);
+  padding: .55rem 1.5rem; border-radius: 4px;
+  transition: background .2s, transform .2s;
+}
+.nav-cta:hover { background: var(--blue-2); transform: translateY(-1px); }
+.nav-lang, .nav-theme {
+  font-size: .85rem; color: var(--muted); padding: .3rem;
+  transition: color .2s;
+}
+.nav-lang:hover, .nav-theme:hover { color: var(--ink); }
+.nav-ham {
+  display: none; flex-direction: column; gap: 5px; padding: 4px;
+}
+.nav-ham span {
+  width: 22px; height: 1.5px; background: var(--ink);
+  border-radius: 2px; transition: all .3s;
+}
+
+/* ─────────────────────────────────────────────────
+   HERO — OMC-style full bleed split
+───────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 72px;
+  overflow: hidden;
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 7rem 4rem 7rem 4rem;
+  position: relative;
+}
+.hero-left::after {
+  content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--border) 30%, var(--border) 70%, transparent);
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: .75rem;
+  font-size: .75rem; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 2rem;
+}
+.hero-eyebrow::before {
+  content: ''; width: 28px; height: 1px; background: var(--gold);
+}
+.hero-h1 {
+  font-family: var(--f-display);
+  font-size: clamp(3.2rem, 5.5vw, 5rem);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 1.75rem;
+}
+.hero-h1 em {
+  font-style: italic; color: var(--blue);
+}
+.hero-h1 strong {
+  font-weight: 600;
+}
+.hero-p {
+  font-size: 1.05rem; font-weight: 300; color: var(--muted);
+  max-width: 440px; line-height: 1.8; margin-bottom: 2.75rem;
+}
+.hero-actions { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.btn-dark {
+  font-size: .9rem; font-weight: 500; letter-spacing: .04em;
+  color: var(--white); background: var(--ink);
+  padding: .85rem 2rem; border-radius: 3px;
+  transition: background .2s, transform .2s;
+  display: inline-flex; align-items: center; gap: .6rem;
+}
+.btn-dark:hover { background: var(--blue); transform: translateY(-2px); }
+.btn-text {
+  font-size: .9rem; font-weight: 400; color: var(--muted);
+  display: inline-flex; align-items: center; gap: .5rem;
+  transition: color .2s; letter-spacing: .03em;
+}
+.btn-text:hover { color: var(--blue); }
+.btn-text .arr { transition: transform .3s; }
+.btn-text:hover .arr { transform: translateX(4px); }
+.hero-stats {
+  margin-top: 5rem; padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 3rem;
+}
+.stat-n {
+  font-family: var(--f-display);
+  font-size: 2.6rem; font-weight: 300;
+  color: var(--ink); line-height: 1;
+}
+.stat-n span { color: var(--gold); font-size: 2rem; }
+.stat-l {
+  font-size: .78rem; font-weight: 400; color: var(--muted);
+  letter-spacing: .06em; text-transform: uppercase;
+  margin-top: .3rem;
+}
+
+.hero-right {
+  position: relative; overflow: hidden;
+  background: var(--ink);
+}
+.hero-right img {
+  width: 100%; height: 100%;
+  object-fit: cover; opacity: .65;
+  transition: transform 8s ease;
+}
+.hero-right:hover img { transform: scale(1.04); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(11,61,145,.5) 0%, rgba(13,15,20,.4) 100%);
+}
+.hero-card {
+  position: absolute; bottom: 2.5rem; left: 2.5rem; right: 2.5rem;
+  background: rgba(255,255,255,.07);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px; padding: 1.5rem 1.75rem;
+  display: flex; align-items: center; gap: 1.25rem;
+}
+.hero-card-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: var(--gold); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+.hero-card p { font-size: .85rem; color: rgba(255,255,255,.7); }
+.hero-card strong { display: block; color: #fff; font-size: 1rem; font-weight: 500; margin-bottom: .15rem; }
+
+/* ─────────────────────────────────────────────────
+   TICKER
+───────────────────────────────────────────────── */
+.ticker-wrap {
+  overflow: hidden; border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--off); padding: .9rem 0;
+}
+.ticker {
+  display: flex; gap: 0; animation: ticker 30s linear infinite;
+  white-space: nowrap;
+}
+.ticker-item {
+  display: inline-flex; align-items: center; gap: .75rem;
+  font-size: .78rem; font-weight: 400; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 0 2.5rem;
+}
+.ticker-item::after {
+  content: ''; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0;
+}
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─────────────────────────────────────────────────
+   SECTION SCAFFOLD
+───────────────────────────────────────────────── */
+.sec { padding: 8rem 4rem; }
+.sec-sm { padding: 5rem 4rem; }
+.sec-alt { background: var(--off); }
+.sec-dark { background: var(--ink); color: var(--white); }
+
+.eyebrow {
+  display: flex; align-items: center; gap: .6rem;
+  font-size: .72rem; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1.25rem;
+}
+.eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+.sec-h {
+  font-family: var(--f-display);
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  font-weight: 300; line-height: 1.12;
+  letter-spacing: -.02em; color: var(--ink);
+  margin-bottom: 1.2rem;
+}
+.sec-h em { font-style: italic; color: var(--blue); }
+.sec-dark .sec-h { color: var(--white); }
+.sec-sub {
+  font-size: 1.05rem; font-weight: 300; color: var(--muted);
+  max-width: 540px; line-height: 1.8;
+}
+.sec-dark .sec-sub { color: rgba(255,255,255,.55); }
+
+/* ─────────────────────────────────────────────────
+   SOLUTIONS BENTO GRID — OMC-style
+───────────────────────────────────────────────── */
+.solutions-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 4rem; gap: 2rem; flex-wrap: wrap;
+}
+.solutions-link {
+  font-size: .85rem; font-weight: 500; color: var(--blue);
+  display: inline-flex; align-items: center; gap: .5rem;
+  letter-spacing: .04em; transition: gap .2s;
+}
+.solutions-link:hover { gap: .9rem; }
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: 1.5px;
+  background: var(--border);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.bento-cell {
+  background: var(--white);
+  padding: 3rem 2.5rem;
+  position: relative; overflow: hidden;
+  transition: background .3s;
+  cursor: default;
+}
+.bento-cell:hover { background: var(--off); }
+.bento-cell.dark { background: var(--ink); }
+.bento-cell.dark:hover { background: var(--ink-2); }
+.bento-cell.blue { background: var(--blue); }
+.bento-cell.blue:hover { background: var(--blue-2); }
+
+/* grid placements */
+.b1 { grid-column: span 5; grid-row: span 2; }
+.b2 { grid-column: span 4; }
+.b3 { grid-column: span 3; }
+.b4 { grid-column: span 4; }
+.b5 { grid-column: span 3; }
+.b6 { grid-column: span 5; }
+.b7 { grid-column: span 4; grid-row: span 2; }
+.b8 { grid-column: span 3; }
+.b9 { grid-column: span 5; }
+
+.bento-num {
+  font-family: var(--f-display);
+  font-size: 4rem; font-weight: 300;
+  color: rgba(0,0,0,.06); line-height: 1;
+  position: absolute; top: 1.5rem; right: 1.75rem;
+  letter-spacing: -.04em;
+}
+.dark .bento-num, .blue .bento-num { color: rgba(255,255,255,.08); }
+.bento-ico {
+  font-size: 1.8rem; margin-bottom: 1.25rem;
+  display: inline-block;
+}
+.bento-h {
+  font-family: var(--f-display);
+  font-size: 1.35rem; font-weight: 400;
+  line-height: 1.2; margin-bottom: .65rem;
+  letter-spacing: -.01em;
+}
+.dark .bento-h, .blue .bento-h { color: var(--white); }
+.bento-p {
+  font-size: .88rem; color: var(--muted);
+  line-height: 1.7; font-weight: 300;
+}
+.dark .bento-p { color: rgba(255,255,255,.5); }
+.blue .bento-p { color: rgba(255,255,255,.7); }
+.bento-tag {
+  display: inline-block; margin-top: 1.25rem;
+  font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
+  font-weight: 500; color: var(--gold);
+  padding: .3rem .75rem;
+  border: 1px solid rgba(184,146,42,.25);
+  border-radius: 100px;
+}
+.blue .bento-tag { color: rgba(255,255,255,.6); border-color: rgba(255,255,255,.2); }
+.dark .bento-tag { color: var(--gold); border-color: rgba(184,146,42,.25); }
+
+/* ─────────────────────────────────────────────────
+   ABOUT — OMC editorial split
+───────────────────────────────────────────────── */
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  overflow: hidden; border-radius: 12px;
+  box-shadow: 0 2px 40px rgba(0,0,0,.06);
+  border: 1px solid var(--border);
+}
+.about-img {
+  position: relative; overflow: hidden; min-height: 560px;
+}
+.about-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 6s ease;
+}
+.about-img:hover img { transform: scale(1.04); }
+.about-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(11,61,145,.7) 0%, transparent 50%);
+}
+.about-img-badge {
+  position: absolute; bottom: 2rem; left: 2rem;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 6px; padding: 1rem 1.25rem;
+}
+.about-img-badge p { font-size: .78rem; color: rgba(255,255,255,.6); margin-bottom: .2rem; }
+.about-img-badge strong { color: var(--white); font-size: .95rem; font-weight: 500; }
+.about-content {
+  padding: 4.5rem 4rem; background: var(--white);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.about-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+.about-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.about-item:last-child { border-bottom: none; padding-bottom: 0; }
+.about-item-n {
+  font-family: var(--f-display); font-size: 1.1rem;
+  font-weight: 300; color: var(--gold); flex-shrink: 0;
+  width: 24px; margin-top: .1rem;
+}
+.about-item-text h4 {
+  font-size: .9rem; font-weight: 600; margin-bottom: .25rem;
+  letter-spacing: .01em;
+}
+.about-item-text p { font-size: .85rem; color: var(--muted); line-height: 1.7; }
+
+/* ─────────────────────────────────────────────────
+   SERVICES — elegant list
+───────────────────────────────────────────────── */
+.svc-cols {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  margin-top: 4rem;
+}
+.svc-col { border-right: 1px solid var(--border); }
+.svc-col:last-child { border-right: none; }
+.svc-col-head {
+  padding: 1.75rem 2rem; border-bottom: 1px solid var(--border);
+  background: var(--off);
+}
+.svc-col-head h3 {
+  font-family: var(--f-display);
+  font-size: 1.1rem; font-weight: 400;
+  letter-spacing: -.01em; color: var(--ink);
+}
+.svc-item {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
+  transition: background .2s;
+}
+.svc-item:last-child { border-bottom: none; }
+.svc-item:hover { background: var(--off); }
+.svc-ico {
+  font-size: 1.1rem; flex-shrink: 0; margin-top: .15rem;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(11,61,145,.06); border-radius: 6px;
+}
+.svc-item h4 { font-size: .9rem; font-weight: 500; margin-bottom: .2rem; }
+.svc-item p { font-size: .8rem; color: var(--muted); line-height: 1.6; }
+
+/* ─────────────────────────────────────────────────
+   STATS STRIP
+───────────────────────────────────────────────── */
+.stats-strip {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.stat-cell {
+  padding: 4rem 3rem; border-right: 1px solid rgba(255,255,255,.08);
+  text-align: center;
+}
+.stat-cell:last-child { border-right: none; }
+.stat-big {
+  font-family: var(--f-display);
+  font-size: 3.5rem; font-weight: 300;
+  color: var(--white); line-height: 1;
+  margin-bottom: .5rem;
+}
+.stat-big em { font-style: normal; color: var(--gold); }
+.stat-desc { font-size: .8rem; font-weight: 400; color: rgba(255,255,255,.45); letter-spacing: .08em; text-transform: uppercase; }
+
+/* ─────────────────────────────────────────────────
+   TECH GRID
+───────────────────────────────────────────────── */
+.tech-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  margin-top: 4rem;
+}
+.tech-item {
+  background: var(--white); padding: 1.6rem 1rem;
+  text-align: center; transition: background .2s;
+  font-size: .82rem; font-weight: 400; color: var(--muted);
+  letter-spacing: .03em;
+}
+.tech-item:hover { background: var(--off); color: var(--blue); }
+.tech-item span { font-size: 1.4rem; display: block; margin-bottom: .4rem; }
+
+/* ─────────────────────────────────────────────────
+   TESTIMONIALS
+───────────────────────────────────────────────── */
+.testi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 4rem; }
+.testi-card {
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 2.25rem; background: var(--white);
+  display: flex; flex-direction: column; gap: 1.25rem;
+  transition: box-shadow .3s, transform .3s;
+}
+.testi-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,.06);
+  transform: translateY(-3px);
+}
+.testi-quote {
+  font-family: var(--f-display); font-size: 3.5rem; font-weight: 300;
+  color: var(--gold); line-height: .8;
+}
+.testi-text { font-size: .95rem; font-weight: 300; color: var(--muted); line-height: 1.8; font-style: italic; }
+.testi-author { font-size: .82rem; font-weight: 600; color: var(--ink); letter-spacing: .04em; text-transform: uppercase; }
+
+/* ─────────────────────────────────────────────────
+   FAQ
+───────────────────────────────────────────────── */
+.faq-list { max-width: 760px; margin: 4rem auto 0; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-btn {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  padding: 1.6rem 0; font-size: 1rem; font-weight: 400;
+  color: var(--ink); text-align: left; gap: 1rem;
+  transition: color .2s;
+}
+.faq-btn:hover { color: var(--blue); }
+.faq-plus {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0; transition: all .3s;
+  color: var(--muted);
+}
+.faq-item.open .faq-plus {
+  background: var(--blue); border-color: var(--blue);
+  color: white; transform: rotate(45deg);
+}
+.faq-body {
+  max-height: 0; overflow: hidden;
+  font-size: .9rem; color: var(--muted); line-height: 1.8;
+  transition: max-height .4s var(--ease), padding .4s;
+  font-weight: 300;
+}
+.faq-item.open .faq-body { max-height: 200px; padding-bottom: 1.5rem; }
+
+/* ─────────────────────────────────────────────────
+   CONTACT
+───────────────────────────────────────────────── */
+.contact-wrap {
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 0;
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  box-shadow: 0 2px 32px rgba(0,0,0,.05);
+}
+.contact-left {
+  background: var(--ink); padding: 4rem 3.5rem;
+  display: flex; flex-direction: column; gap: 2rem;
+}
+.contact-left h3 {
+  font-family: var(--f-display);
+  font-size: 2rem; font-weight: 300;
+  color: var(--white); line-height: 1.2;
+}
+.contact-left h3 em { font-style: italic; color: var(--gold); }
+.contact-details { display: flex; flex-direction: column; gap: 1rem; margin-top: auto; }
+.contact-row { display: flex; align-items: center; gap: .85rem; }
+.contact-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(255,255,255,.07); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem;
+}
+.contact-row p { font-size: .82rem; color: rgba(255,255,255,.45); margin-bottom: .15rem; }
+.contact-row strong { color: var(--white); font-size: .9rem; font-weight: 400; }
+.contact-right { background: var(--white); padding: 4rem 3.5rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { margin-bottom: 1.25rem; }
+.form-group label {
+  display: block; font-size: .72rem; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: .5rem;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%; padding: .8rem 1rem;
+  border: 1px solid var(--border); border-radius: 4px;
+  font-family: var(--f-body); font-size: .9rem; color: var(--ink);
+  background: var(--off); outline: none;
+  transition: border-color .2s, background .2s;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--blue); background: var(--white);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: #B0B8C5; }
+.form-group textarea { min-height: 120px; resize: vertical; }
+.form-group select option { background: white; }
+.form-submit {
+  width: 100%; padding: .95rem;
+  background: var(--blue); color: var(--white);
+  font-family: var(--f-body); font-size: .95rem; font-weight: 500;
+  letter-spacing: .04em; border-radius: 4px;
+  transition: background .2s, transform .2s;
+}
+.form-submit:hover { background: var(--blue-2); transform: translateY(-1px); }
+.form-msg {
+  text-align: center; margin-top: 1rem; font-size: .85rem;
+  color: var(--blue); display: none;
+}
+
+/* ─────────────────────────────────────────────────
+   NSIC strip
+───────────────────────────────────────────────── */
+.nsic-strip {
+  background: var(--off); border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 4rem;
+}
+.nsic-inner {
+  display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+}
+.nsic-label {
+  font-size: .72rem; font-weight: 500; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--gold);
+  white-space: nowrap;
+}
+.nsic-items { display: flex; flex-wrap: wrap; gap: .5rem; }
+.nsic-chip {
+  font-size: .75rem; font-weight: 400; color: var(--muted);
+  padding: .3rem .8rem;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 100px; transition: all .2s;
+  letter-spacing: .02em;
+}
+.nsic-chip:hover { border-color: var(--blue); color: var(--blue); }
+.nsic-chip strong { color: var(--ink); font-weight: 500; }
+
+/* ─────────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────────── */
+.footer {
+  background: var(--ink); color: rgba(255,255,255,.5);
+  padding: 5rem 4rem 2.5rem;
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem; padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  margin-bottom: 2rem;
+}
+.footer-brand p {
+  font-size: .875rem; color: rgba(255,255,255,.4);
+  line-height: 1.8; max-width: 280px; margin-top: 1.25rem;
+  font-weight: 300;
+}
+.footer-brand .f-logo {
+  font-family: var(--f-display); font-size: 1.5rem;
+  font-weight: 400; color: var(--white);
+  display: flex; align-items: center; gap: 10px;
+}
+.footer-col h5 {
+  font-size: .7rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(255,255,255,.35);
+  margin-bottom: 1.25rem;
+}
+.footer-col a {
+  display: block; font-size: .875rem; color: rgba(255,255,255,.45);
+  margin-bottom: .65rem; transition: color .2s; font-weight: 300;
+}
+.footer-col a:hover { color: var(--white); }
+.footer-bottom {
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+.footer-bottom p { font-size: .8rem; color: rgba(255,255,255,.3); }
+.footer-tags { display: flex; gap: .75rem; flex-wrap: wrap; }
+.f-tag {
+  font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--gold); padding: .3rem .7rem;
+  border: 1px solid rgba(184,146,42,.25); border-radius: 100px;
+}
+
+/* ─────────────────────────────────────────────────
+   FLOATERS
+───────────────────────────────────────────────── */
+.back-top {
+  position: fixed; bottom: 2.5rem; right: 2.5rem; z-index: 800;
+  width: 44px; height: 44px;
+  background: var(--ink); color: var(--white);
+  border-radius: 4px; border: 1px solid rgba(255,255,255,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; opacity: 0; pointer-events: none;
+  transition: opacity .3s, transform .3s;
+}
+.back-top.vis { opacity: 1; pointer-events: auto; }
+.back-top:hover { transform: translateY(-3px); background: var(--blue); }
+
+.chat-float {
+  position: fixed; bottom: 2.5rem; left: 2.5rem; z-index: 800;
+}
+.chat-float-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--blue); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 20px rgba(11,61,145,.3);
+  transition: transform .2s, background .2s;
+}
+.chat-float-btn:hover { transform: scale(1.08); background: var(--blue-2); }
+.chat-pop {
+  position: absolute; bottom: 64px; left: 0;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.5rem;
+  width: 260px; box-shadow: 0 8px 32px rgba(0,0,0,.1);
+  display: none; flex-direction: column; gap: .5rem;
+}
+.chat-pop.vis { display: flex; }
+.chat-pop h5 {
+  font-size: .85rem; font-weight: 600; margin-bottom: .5rem; color: var(--ink);
+}
+.chat-pop a {
+  display: flex; align-items: center; gap: .65rem;
+  font-size: .85rem; color: var(--muted); padding: .55rem .75rem;
+  border-radius: 6px; transition: background .2s, color .2s; font-weight: 400;
+}
+.chat-pop a:hover { background: var(--off); color: var(--blue); }
+.chat-pop-close {
+  position: absolute; top: .75rem; right: .75rem;
+  font-size: .85rem; color: var(--muted); padding: .2rem; transition: color .2s;
+}
+.chat-pop-close:hover { color: var(--ink); }
+
+.cookie-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--ink); color: rgba(255,255,255,.7);
+  padding: 1.1rem 4rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; z-index: 850; font-size: .85rem;
+  transform: translateY(100%); transition: transform .4s var(--ease);
+}
+.cookie-bar.vis { transform: translateY(0); }
+.cookie-bar a { color: var(--gold); }
+.cookie-accept {
+  font-size: .82rem; font-weight: 500;
+  color: var(--white); background: var(--blue);
+  padding: .55rem 1.5rem; border-radius: 3px;
+  white-space: nowrap; transition: background .2s;
+}
+.cookie-accept:hover { background: var(--blue-2); }
+
+/* Mobile call bar */
+.mob-call {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--blue); color: var(--white);
+  text-align: center; padding: .9rem; font-size: .9rem; font-weight: 500;
+  z-index: 800; letter-spacing: .04em;
+}
+
+/* ─────────────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal-d1 { transition-delay: .1s; }
+.reveal-d2 { transition-delay: .2s; }
+.reveal-d3 { transition-delay: .3s; }
+
+/* ─────────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .bento { display: grid; grid-template-columns: 1fr 1fr; }
+  .b1,.b2,.b3,.b4,.b5,.b6,.b7,.b8,.b9 { grid-column: span 1; grid-row: span 1; }
+  .b1 { grid-column: span 2; }
+}
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { min-height: 360px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .svc-cols { grid-template-columns: 1fr; }
+  .svc-col { border-right: none; border-bottom: 1px solid var(--border); }
+  .testi-grid { grid-template-columns: 1fr; }
+  .contact-wrap { grid-template-columns: 1fr; }
+  .stats-strip { grid-template-columns: 1fr 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .nav { padding: 0 2rem; }
+  .sec { padding: 5rem 2rem; }
+  .sec-sm { padding: 3rem 2rem; }
+  .nsic-strip { padding: 2rem; }
+}
+@media (max-width: 640px) {
+  .nav-links, .nav-right { display: none; }
+  .nav-ham { display: flex; }
+  .hero-left { padding: 5rem 2rem 4rem; }
+  .hero-stats { gap: 2rem; flex-wrap: wrap; }
+  .stats-strip { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .bento { grid-template-columns: 1fr; }
+  .b1 { grid-column: span 1; }
+  .mob-call { display: block; }
+  .chat-float { bottom: 4.5rem; }
+  .back-top { bottom: 4.5rem; }
+}
+
+/* Mobile menu overlay */
+.mob-menu {
+  display: none; position: fixed; top: 72px; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,.98); backdrop-filter: blur(16px);
+  z-index: 800; padding: 3rem 2rem; flex-direction: column; gap: 1.5rem;
+  overflow-y: auto;
+}
+.mob-menu.vis { display: flex; }
+.mob-menu a {
+  font-size: 1.4rem; font-weight: 300; color: var(--ink);
+  font-family: var(--f-display);
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  transition: color .2s;
+}
+.mob-menu a:hover { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- ═══ NAV ═══ -->
+<header class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 56 56" fill="none">
+        <polyline points="10,34 22,18 30,26 38,14 46,28" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="30" y1="26" x2="30" y2="40" stroke="rgba(255,255,255,.6)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="30" cy="46" r="4" fill="rgba(255,255,255,.4)"/>
+        <circle cx="30" cy="46" r="2" fill="#fff"/>
+      </svg>
+    </div>
+    Evelynx
+  </a>
+  <nav class="nav-links">
+    <a href="#solutions">Solutions</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#technologies">Technologies</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <div class="nav-right">
+    <button class="nav-lang" id="langBtn" title="भाषा / Language">🇳🇵 नेपाली</button>
+    <a href="#contact" class="nav-cta">Contact us</a>
+  </div>
+  <button class="nav-ham" id="hamBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Mobile menu -->
+<div class="mob-menu" id="mobMenu">
+  <a href="#solutions" class="mob-link">Solutions</a>
+  <a href="#services" class="mob-link">Services</a>
+  <a href="#about" class="mob-link">About</a>
+  <a href="#technologies" class="mob-link">Technologies</a>
+  <a href="#faq" class="mob-link">FAQ</a>
+  <a href="#contact" class="mob-link">Contact</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Kathmandu, Nepal &nbsp;·&nbsp; Est. 2081 B.S.</div>
+    <h1 class="hero-h1">
+      Technology that<br/>
+      <em>transforms</em><br/>
+      <strong>your business.</strong>
+    </h1>
+    <p class="hero-p">From custom software to cloud infrastructure, cybersecurity to AI — Evelynx Solutions is Nepal's most comprehensive IT partner. Limited liability, unlimited ambition.</p>
+    <div class="hero-actions">
+      <a href="#solutions" class="btn-dark">
+        Explore solutions
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#contact" class="btn-text">
+        Start a project
+        <span class="arr">→</span>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-n"><span class="count" data-t="12">0</span><span>+</span></div>
+        <div class="stat-l">Service domains</div>
+      </div>
+      <div>
+        <div class="stat-n"><span class="count" data-t="50">0</span><span>+</span></div>
+        <div class="stat-l">Happy clients</div>
+      </div>
+      <div>
+        <div class="stat-n">100<span>%</span></div>
+        <div class="stat-l">Nepal registered</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&auto=format&fit=crop&q=80" alt="Technology"/>
+    <div class="hero-overlay"></div>
+    <div class="hero-card">
+      <div class="hero-card-icon">🏛️</div>
+      <div>
+        <strong>OCR Registered Company</strong>
+        <p>Companies Act 2063 · PAN Holder · SSF Compliant Employer</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TICKER ═══ -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">Software Development</span>
+    <span class="ticker-item">Cloud Infrastructure</span>
+    <span class="ticker-item">Cybersecurity</span>
+    <span class="ticker-item">AI & Machine Learning</span>
+    <span class="ticker-item">IT Consulting</span>
+    <span class="ticker-item">UI/UX Design</span>
+    <span class="ticker-item">Digital Marketing</span>
+    <span class="ticker-item">Web Portals</span>
+    <span class="ticker-item">Data Processing</span>
+    <span class="ticker-item">Hardware Retail</span>
+    <span class="ticker-item">Computer Repair</span>
+    <span class="ticker-item">Business Consulting</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">Software Development</span>
+    <span class="ticker-item">Cloud Infrastructure</span>
+    <span class="ticker-item">Cybersecurity</span>
+    <span class="ticker-item">AI & Machine Learning</span>
+    <span class="ticker-item">IT Consulting</span>
+    <span class="ticker-item">UI/UX Design</span>
+    <span class="ticker-item">Digital Marketing</span>
+    <span class="ticker-item">Web Portals</span>
+    <span class="ticker-item">Data Processing</span>
+    <span class="ticker-item">Hardware Retail</span>
+    <span class="ticker-item">Computer Repair</span>
+    <span class="ticker-item">Business Consulting</span>
+  </div>
+</div>
+
+<!-- ═══ SOLUTIONS BENTO ═══ -->
+<section class="sec" id="solutions">
+  <div class="solutions-header reveal">
+    <div>
+      <div class="eyebrow">What we solve</div>
+      <h2 class="sec-h">End-to-end IT solutions<br/>for <em>every</em> challenge</h2>
+    </div>
+    <a href="#services" class="solutions-link">View all services →</a>
+  </div>
+  <div class="bento reveal">
+    <div class="bento-cell b1 dark">
+      <div class="bento-num">01</div>
+      <div class="bento-ico">💻</div>
+      <div class="bento-h">Software Development</div>
+      <div class="bento-p">Custom web and mobile applications, enterprise systems, scalable APIs and microservices — engineered for performance and maintainability.</div>
+      <span class="bento-tag">NSIC 5820 · 6201</span>
+    </div>
+    <div class="bento-cell b2">
+      <div class="bento-num">02</div>
+      <div class="bento-ico">☁️</div>
+      <div class="bento-h">Cloud & Infrastructure</div>
+      <div class="bento-p">Cloud hosting, SaaS platforms, DevOps and server management built for scale.</div>
+      <span class="bento-tag">NSIC 6209 · 6311</span>
+    </div>
+    <div class="bento-cell b3 blue">
+      <div class="bento-num">03</div>
+      <div class="bento-ico">🔒</div>
+      <div class="bento-h">Cybersecurity</div>
+      <div class="bento-p">Vulnerability assessment, security audits, ransomware protection and 24/7 monitoring.</div>
+      <span class="bento-tag">NSIC 6209</span>
+    </div>
+    <div class="bento-cell b4">
+      <div class="bento-num">04</div>
+      <div class="bento-ico">🧠</div>
+      <div class="bento-h">AI & Machine Learning</div>
+      <div class="bento-p">Data analytics, ML model development and intelligent automation for your processes.</div>
+      <span class="bento-tag">NSIC 5820</span>
+    </div>
+    <div class="bento-cell b5">
+      <div class="bento-num">05</div>
+      <div class="bento-ico">🌐</div>
+      <div class="bento-h">Web Portals & SaaS</div>
+      <div class="bento-p">High-performance websites, e-commerce and SaaS platforms built with modern stacks.</div>
+      <span class="bento-tag">NSIC 6312</span>
+    </div>
+    <div class="bento-cell b6">
+      <div class="bento-num">06</div>
+      <div class="bento-ico">📊</div>
+      <div class="bento-h">IT Consulting & Digital Transformation</div>
+      <div class="bento-p">System architecture, technology roadmaps, and business transformation advisory to align IT with your goals.</div>
+      <span class="bento-tag">NSIC 6202 · 7020</span>
+    </div>
+    <div class="bento-cell b7">
+      <div class="bento-num">07</div>
+      <div class="bento-ico">🎨</div>
+      <div class="bento-h">UI/UX & Branding</div>
+      <div class="bento-p">User interface design, UX research, brand identity and graphic design that make your product stand out. Visual communication that converts.</div>
+      <span class="bento-tag">NSIC 7410</span>
+    </div>
+    <div class="bento-cell b8">
+      <div class="bento-num">08</div>
+      <div class="bento-ico">📣</div>
+      <div class="bento-h">Digital Marketing</div>
+      <div class="bento-p">SEO, SEM, social campaigns and online advertising that grow your presence.</div>
+      <span class="bento-tag">NSIC 7310</span>
+    </div>
+    <div class="bento-cell b9 blue">
+      <div class="bento-num">09</div>
+      <div class="bento-ico">🛠️</div>
+      <div class="bento-h">Hardware & Repair</div>
+      <div class="bento-p">Import, wholesale, retail, and repair of computers, laptops, peripherals and accessories across Nepal.</div>
+      <span class="bento-tag">NSIC 4651 · 4741 · 9511</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="sec sec-alt" id="about">
+  <div class="about-grid reveal">
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&auto=format&fit=crop&q=80" alt="Pusparaj Khadka — CEO"/>
+      <div class="about-img-overlay"></div>
+      <div class="about-img-badge">
+        <p>Founder & Chief Executive Officer</p>
+        <strong>Pusparaj Khadka · BIT</strong>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="eyebrow">About Evelynx</div>
+      <h2 class="sec-h">Engineered with purpose,<br/>delivered with <em>precision</em></h2>
+      <p class="sec-sub">Evelynx Solutions was founded with a single mission: deliver world-class IT to Nepal's businesses — at every scale, in every sector, without compromise.</p>
+      <div class="about-list">
+        <div class="about-item">
+          <div class="about-item-n">01</div>
+          <div class="about-item-text">
+            <h4>Nepal-first mindset</h4>
+            <p>Deep understanding of the local market, regulatory landscape, and business environment — solutions that work <em>here</em>.</p>
+          </div>
+        </div>
+        <div class="about-item">
+          <div class="about-item-n">02</div>
+          <div class="about-item-text">
+            <h4>Legally compliant & transparent</h4>
+            <p>OCR registered, PAN holder, SSF-compliant employer under Labour Act 2074, Companies Act 2063 and Privacy Act 2075.</p>
+          </div>
+        </div>
+        <div class="about-item">
+          <div class="about-item-n">03</div>
+          <div class="about-item-text">
+            <h4>Security-first in every engagement</h4>
+            <p>Data privacy, secure coding, and cybersecurity built into every solution from day one — not bolted on after.</p>
+          </div>
+        </div>
+        <div class="about-item">
+          <div class="about-item-n">04</div>
+          <div class="about-item-text">
+            <h4>Intellectual property belongs to you</h4>
+            <p>All work product created for your project is assigned to you on completion. No lock-in, no ambiguity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS STRIP ═══ -->
+<div class="sec-dark">
+  <div class="stats-strip reveal">
+    <div class="stat-cell">
+      <div class="stat-big"><span class="count" data-t="12">0</span><em>+</em></div>
+      <div class="stat-desc">NSIC registered domains</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big"><span class="count" data-t="50">0</span><em>+</em></div>
+      <div class="stat-desc">Clients served</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big"><span class="count" data-t="100">0</span><em>%</em></div>
+      <div class="stat-desc">IP ownership to clients</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big">24<em>/7</em></div>
+      <div class="stat-desc">Support availability</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="sec" id="services">
+  <div class="solutions-header reveal">
+    <div>
+      <div class="eyebrow">What we offer</div>
+      <h2 class="sec-h">Comprehensive IT services<br/>under one <em>roof</em></h2>
+    </div>
+  </div>
+  <div class="svc-cols reveal">
+    <!-- Infrastructure -->
+    <div class="svc-col">
+      <div class="svc-col-head"><h3>Infrastructure</h3></div>
+      <div class="svc-item"><div class="svc-ico">📡</div><div><h4>Wireless Infrastructure</h4><p>Wi-Fi networks for offices, campuses and public venues.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🖥️</div><div><h4>Endpoint Management</h4><p>Centralized device management with patching and policy control.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🌐</div><div><h4>Network Management</h4><p>Proactive LAN, WAN and VPN monitoring and optimization.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">☁️</div><div><h4>Cloud Backup & DR</h4><p>Automated backups and rapid recovery for zero downtime.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">📧</div><div><h4>Microsoft 365</h4><p>Migration, setup and management of M365 suite.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🔥</div><div><h4>Managed Firewall</h4><p>24/7 firewall monitoring and intrusion prevention.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🎧</div><div><h4>Managed Helpdesk</h4><p>Multi-channel IT support desk for your employees.</p></div></div>
+    </div>
+    <!-- Security -->
+    <div class="svc-col">
+      <div class="svc-col-head"><h3>Security</h3></div>
+      <div class="svc-item"><div class="svc-ico">🛡️</div><div><h4>Endpoint Protection</h4><p>Next-gen antivirus and device control across all endpoints.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🔍</div><div><h4>IT Security Risk Analysis</h4><p>Identify vulnerabilities and compliance gaps in your environment.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🔐</div><div><h4>Ransomware Protection</h4><p>Multi-layered defense and recovery against ransomware.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🎓</div><div><h4>Security Awareness Training</h4><p>Transform your staff into the first line of cyber defense.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">📋</div><div><h4>Vulnerability Assessment</h4><p>Regular penetration testing to find and fix security holes.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🔑</div><div><h4>Identity & Access Management</h4><p>Secure access controls and privilege management.</p></div></div>
+    </div>
+    <!-- Remote & Dev -->
+    <div class="svc-col">
+      <div class="svc-col-head"><h3>Remote & Development</h3></div>
+      <div class="svc-item"><div class="svc-ico">💻</div><div><h4>Virtual Desktop Solutions</h4><p>Cloud-based desktops enabling work from anywhere.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">✉️</div><div><h4>Business Email Management</h4><p>Hosting, spam filtering and archiving for uninterrupted comms.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">📂</div><div><h4>Remote File Access</h4><p>Encrypted access to files and shared drives from anywhere.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">📱</div><div><h4>Mobile App Development</h4><p>Cross-platform iOS and Android apps with React Native / Flutter.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🤖</div><div><h4>AI-Powered Solutions</h4><p>Custom ML models, chatbots and automation for your business.</p></div></div>
+      <div class="svc-item"><div class="svc-ico">🛒</div><div><h4>E-commerce Platforms</h4><p>Full-stack online stores with payment gateway integration.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TECHNOLOGIES ═══ -->
+<section class="sec sec-alt" id="technologies">
+  <div class="solutions-header reveal">
+    <div>
+      <div class="eyebrow">Our stack</div>
+      <h2 class="sec-h">Technologies we<br/><em>work with</em></h2>
+    </div>
+    <p class="sec-sub" style="max-width:320px;">Technology-agnostic — we recommend the right tools for each project.</p>
+  </div>
+  <div class="tech-grid reveal">
+    <div class="tech-item"><span>⚛️</span>React / Next.js</div>
+    <div class="tech-item"><span>💚</span>Vue.js</div>
+    <div class="tech-item"><span>🟩</span>Node.js</div>
+    <div class="tech-item"><span>🐍</span>Python</div>
+    <div class="tech-item"><span>⚡</span>FastAPI / Django</div>
+    <div class="tech-item"><span>🐘</span>Laravel / PHP</div>
+    <div class="tech-item"><span>🗄️</span>PostgreSQL</div>
+    <div class="tech-item"><span>🍃</span>MongoDB</div>
+    <div class="tech-item"><span>☁️</span>AWS</div>
+    <div class="tech-item"><span>🐳</span>Docker / K8s</div>
+    <div class="tech-item"><span>🤖</span>TensorFlow</div>
+    <div class="tech-item"><span>📱</span>Flutter</div>
+    <div class="tech-item"><span>⚛️</span>React Native</div>
+    <div class="tech-item"><span>🔷</span>TypeScript</div>
+    <div class="tech-item"><span>🔗</span>GraphQL</div>
+    <div class="tech-item"><span>🎨</span>Figma / XD</div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="sec" id="testimonials">
+  <div class="solutions-header reveal">
+    <div>
+      <div class="eyebrow">Client testimonials</div>
+      <h2 class="sec-h">Trusted by businesses<br/>across <em>Nepal</em></h2>
+    </div>
+  </div>
+  <div class="testi-grid reveal">
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Evelynx transformed our IT infrastructure completely. Their support is outstanding — proactive, responsive, and truly understanding of our business needs.</p>
+      <div class="testi-author">— A Nepali Fintech Startup</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Their cloud migration saved us 40% in operational costs. The team's expertise and round-the-clock availability made the transition completely seamless.</p>
+      <div class="testi-author">— Kathmandu-based E-commerce Company</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">We've been relying on Evelynx for cybersecurity and managed IT for years. They've never let us down. A trusted partner, not just a vendor.</p>
+      <div class="testi-author">— National NGO, Nepal</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="sec sec-alt" id="faq">
+  <div class="text-c reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+    <div class="eyebrow" style="justify-content:center;">Frequently asked questions</div>
+    <h2 class="sec-h">Common <em>questions</em></h2>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-btn"><span>What is a Managed IT Service?</span><span class="faq-plus">+</span></button>
+      <div class="faq-body">We take full responsibility for your IT infrastructure — monitoring, maintenance, security and support — for a fixed monthly fee. You focus on your business; we keep the technology running.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn"><span>How quickly do you respond to support requests?</span><span class="faq-plus">+</span></button>
+      <div class="faq-body">Our helpdesk is available 24/7. Most issues are acknowledged within 15 minutes; critical problems resolved in under 4 hours by our remote and on-site teams.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn"><span>Do you serve clients outside Kathmandu?</span><span class="faq-plus">+</span></button>
+      <div class="faq-body">Yes. Our office is in Kathmandu, but we serve clients across Nepal — from Pokhara to Biratnagar — through a combination of remote support and scheduled on-site visits.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn"><span>Is my data safe with your cloud solutions?</span><span class="faq-plus">+</span></button>
+      <div class="faq-body">Absolutely. We use bank-grade encryption, regular backups and strict compliance standards. Your data never leaves Nepal without your explicit written consent.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn"><span>Who owns the software built for my project?</span><span class="faq-plus">+</span></button>
+      <div class="faq-body">You do. All intellectual property — source code, designs, databases — is fully assigned to you upon project completion and final payment. Our contracts make this explicit.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn"><span>Is Evelynx Solutions a legally registered company?</span><span class="faq-plus">+</span></button>
+      <div class="faq-body">Yes. Evelynx Solutions Private Limited is registered with the Office of Company Registrar (OCR) under the Companies Act 2063 of Nepal. We hold a PAN, are VAT-ready, and operate as an SSF-compliant employer under the Labour Act 2074.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NSIC STRIP ═══ -->
+<div class="nsic-strip reveal">
+  <div class="nsic-inner">
+    <span class="nsic-label">NSIC registered activities</span>
+    <div class="nsic-items">
+      <span class="nsic-chip"><strong>4651</strong> IT Wholesale</span>
+      <span class="nsic-chip"><strong>4741</strong> Computer Retail</span>
+      <span class="nsic-chip"><strong>5820</strong> Software Publishing</span>
+      <span class="nsic-chip"><strong>6201</strong> Programming</span>
+      <span class="nsic-chip"><strong>6202</strong> IT Consultancy</span>
+      <span class="nsic-chip"><strong>6209</strong> Other IT Services</span>
+      <span class="nsic-chip"><strong>6311</strong> Data Processing</span>
+      <span class="nsic-chip"><strong>6312</strong> Web Portals</span>
+      <span class="nsic-chip"><strong>7020</strong> Management Consulting</span>
+      <span class="nsic-chip"><strong>7310</strong> Advertising</span>
+      <span class="nsic-chip"><strong>7410</strong> Design Activities</span>
+      <span class="nsic-chip"><strong>9511</strong> Computer Repair</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="sec" id="contact">
+  <div class="solutions-header reveal">
+    <div>
+      <div class="eyebrow">Get in touch</div>
+      <h2 class="sec-h">Let's build something<br/><em>together</em></h2>
+    </div>
+  </div>
+  <div class="contact-wrap reveal">
+    <div class="contact-left">
+      <h3>Ready to transform your<br/><em>technology?</em></h3>
+      <p style="font-size:.9rem; color:rgba(255,255,255,.45); font-weight:300; line-height:1.8;">Tell us about your project. We'll respond within 24 hours with a tailored approach and clear next steps.</p>
+      <div class="contact-details">
+        <div class="contact-row">
+          <div class="contact-ico">📧</div>
+          <div>
+            <p>Email</p>
+            <strong>info@evelynxsolutions.com.np</strong>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-ico">📞</div>
+          <div>
+            <p>Phone / WhatsApp</p>
+            <strong>+977-9768969780</strong>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-ico">📍</div>
+          <div>
+            <p>Office</p>
+            <strong>Kathmandu, Nepal</strong>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-ico">🕐</div>
+          <div>
+            <p>Working hours</p>
+            <strong>Sun – Fri, 9:00am – 6:00pm (NPT)</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <form action="https://formspree.io/f/xbdbqerg" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full name</label>
+            <input type="text" name="name" placeholder="Your name" required/>
+          </div>
+          <div class="form-group">
+            <label>Email address</label>
+            <input type="email" name="_replyto" placeholder="you@company.com" required/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" name="phone" placeholder="+977-__________"/>
+          </div>
+          <div class="form-group">
+            <label>Company</label>
+            <input type="text" name="company" placeholder="Company name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Service needed</label>
+          <select name="service">
+            <option value="">Select a service...</option>
+            <option>Software Development</option>
+            <option>Web / Portal Development</option>
+            <option>Mobile App Development</option>
+            <option>Cloud & Infrastructure</option>
+            <option>AI / Machine Learning</option>
+            <option>Cybersecurity</option>
+            <option>UI/UX & Design</option>
+            <option>Digital Marketing</option>
+            <option>IT Consulting</option>
+            <option>IT Hardware</option>
+            <option>Managed IT Services</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tell us about your project</label>
+          <textarea name="message" placeholder="Describe your project, timeline and budget..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send enquiry →</button>
+        <p class="form-msg" id="formMsg">Thank you — we'll be in touch within 24 hours.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="f-logo">
+        <div class="nav-logo-mark" style="width:32px;height:32px;border-radius:6px;">
+          <svg viewBox="0 0 56 56" fill="none" style="width:18px;height:18px;">
+            <polyline points="10,34 22,18 30,26 38,14 46,28" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="30" y1="26" x2="30" y2="40" stroke="rgba(255,255,255,.6)" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="30" cy="46" r="3" fill="rgba(255,255,255,.4)"/><circle cx="30" cy="46" r="1.5" fill="#fff"/>
+          </svg>
+        </div>
+        Evelynx Solutions
+      </div>
+      <p>A Nepal-registered Private Limited company delivering software, cloud, cybersecurity and digital transformation from Kathmandu.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Solutions</h5>
+      <a href="#solutions">Software Development</a>
+      <a href="#solutions">Cloud Solutions</a>
+      <a href="#solutions">Cybersecurity</a>
+      <a href="#solutions">AI & ML</a>
+      <a href="#solutions">UI/UX Design</a>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <a href="#about">About us</a>
+      <a href="#technologies">Technologies</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Companies Act 2063</a>
+      <a href="#">Labour Act 2074</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2081 B.S. Evelynx Solutions Private Limited · Kathmandu, Nepal · All rights reserved.</p>
+    <div class="footer-tags">
+      <span class="f-tag">OCR Registered</span>
+      <span class="f-tag">PAN Holder</span>
+      <span class="f-tag">SSF Compliant</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ FLOATERS ═══ -->
+<a href="tel:+9779768969780" class="mob-call">📞 Tap to call — +977-9768969780</a>
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="chat-float" id="chatFloat">
+  <div class="chat-pop" id="chatPop">
+    <button class="chat-pop-close" id="chatClose">✕</button>
+    <h5>How can we help?</h5>
+    <a href="https://wa.me/9779768969780" target="_blank">💬 WhatsApp Chat</a>
+    <a href="mailto:info@evelynxsolutions.com.np">✉️ Email Us</a>
+    <a href="tel:+9779768969780">📞 Call Now</a>
+  </div>
+  <button class="chat-float-btn" id="chatBtn">💬</button>
+</div>
+<div class="cookie-bar" id="cookieBar">
+  <span>🍪 We use cookies to improve your experience. <a href="#">Privacy Policy</a>.</span>
+  <button class="cookie-accept" id="cookieAccept">Accept</button>
+</div>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+/* Progress bar */
+window.addEventListener('scroll', () => {
+  const el = document.documentElement;
+  const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('nav').classList.toggle('bg', window.scrollY > 40);
+  document.getElementById('backTop').classList.toggle('vis', window.scrollY > 600);
+});
+
+/* Reveal on scroll */
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+reveals.forEach(r => obs.observe(r));
+
+/* Animated counters */
+const counters = document.querySelectorAll('.count');
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = +el.getAttribute('data-t');
+    let n = 0; const step = target / 80;
+    const tick = () => { n = Math.min(n + step, target); el.textContent = Math.ceil(n); if (n < target) requestAnimationFrame(tick); };
+    tick(); countObs.unobserve(el);
+  });
+}, { threshold: .5 });
+counters.forEach(c => countObs.observe(c));
+
+/* FAQ */
+document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+/* Nav hamburger */
+const hamBtn = document.getElementById('hamBtn');
+const mobMenu = document.getElementById('mobMenu');
+hamBtn.addEventListener('click', () => mobMenu.classList.toggle('vis'));
+document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => mobMenu.classList.remove('vis')));
+
+/* Chat widget */
+const chatBtn = document.getElementById('chatBtn');
+const chatPop = document.getElementById('chatPop');
+const chatClose = document.getElementById('chatClose');
+chatBtn.addEventListener('click', e => { e.stopPropagation(); chatPop.classList.toggle('vis'); });
+chatClose.addEventListener('click', () => chatPop.classList.remove('vis'));
+window.addEventListener('click', e => { if (!document.getElementById('chatFloat').contains(e.target)) chatPop.classList.remove('vis'); });
+
+/* Cookie */
+const cookieBar = document.getElementById('cookieBar');
+const cookieAccept = document.getElementById('cookieAccept');
+if (!localStorage.getItem('ck')) setTimeout(() => cookieBar.classList.add('vis'), 1500);
+cookieAccept.addEventListener('click', () => { localStorage.setItem('ck', '1'); cookieBar.classList.remove('vis'); });
+
+/* Language toggle (simple redirect placeholder) */
+document.getElementById('langBtn').addEventListener('click', function() {
+  const isNe = this.textContent.includes('नेपाली');
+  this.textContent = isNe ? '🇬🇧 English' : '🇳🇵 नेपाली';
+  // Extend with full i18n if needed
+});
+</script>
+</body>
+</html>
